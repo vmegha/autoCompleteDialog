@@ -101,7 +101,7 @@ musicApp.directive('onOuterClick', function ($document) {
 musicApp.factory('musicFactory', function($q, $http){
 	return{
 		getMusic : function(){
-			 var productionUrl = "http://localhost:63342/Wynk_inc/";
+			 var productionUrl = "https://vmegha.github.io/companyInfo/";
 			var deferred = $q.defer();
 			$http.get(productionUrl + 'companies.json', {
 				cache: true
