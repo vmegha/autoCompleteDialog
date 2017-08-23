@@ -1,0 +1,43 @@
+{
+	"companies": [{
+			"name": "Flipkart",
+			"description": "Flipkart is an online shopping destination for electronics, books, music, and movies",
+			"location": "Bengaluru",
+			"website": "www.flipkart.com",
+			"market": ["e-commerce", "fashion", "data as a service"],
+			"employees": 1000,
+			"stage": "Pre Series A",
+			"founders": ["Sachin Bansal", "Binny Bansal"]
+		},
+		{
+			"name": "Uber",
+			"description": "Uber is an online booking of car transportation and food delivery ",
+			"location": "Gurgaon",
+			"website": "www.fuber.com",
+			"market": ["mid-distance transportation"],
+			"employees": 1000,
+			"stage": "Pre Series A",
+			"founders": ["Sachin Bansal", "Binny Bansal"]
+		},
+		{
+			"name": "paytm",
+			"description": "paytm is an online  destination for electronics, home appliances, mobile phones, clothing with good cashback scheme for users. Booking bikes, cars, digital gold",
+			"location": "Noida",
+			"website": "www.paytm.com",
+			"market": ["e-commerce", "fashion", "data as a service", "entertainment"],
+			"employees": 1000,
+			"stage": "Pre Series A",
+			"founders": ["Sachin Bansal", "Binny Bansal"]
+		},
+		{
+			"name": "payu",
+			"description": "A payment gateway is a merchant service provided by an e-commerce application service provider that authorizes credit card or direct payments processing",
+			"location": "Gurgaon",
+			"website": "www.payu.com",
+			"market": ["payments online"],
+			"employees": 1000,
+			"stage": "Pre Series A",
+			"founders": ["Sachin Bansal", "Binny Bansal"]
+		}
+	]
+}
