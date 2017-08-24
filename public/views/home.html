@@ -1,3 +1,4 @@
+<!--
 <div class="header">
   <h1>Companies Info</h1>
 </div>
@@ -58,12 +59,56 @@
 		    		</td>
 		    	</tr>
 		    	</tbody>
-		    	<!-- <tr>{{list.location}}</tr> -->
-		    
+		    	&lt;!&ndash; <tr>{{list.location}}</tr> &ndash;&gt;
+
 	    </table>
-	</div> 
+	</div>
 </div>
 <div class = "error">{{error}}</div>
 <div class="footer" ng-if="!load && (myLimit <  companyList.length)" ng-click="loadMore()">
-	 Load More 
+	 Load More
+</div>-->
+<div class="mockUp">
+	<div class = "content">
+		<div class="head">Select an Employee</div>
+		<div>
+			<input type="checkbox" name= "email" id="emailEmp">
+			<label>Send welcome email to employee</label>
+		</div>
+		<div class="team">
+			<div class="teamHead">Select a team in the organisation</div>
+			<input  class="input" type='text' placeholder="Select Team..."  ng-model = "employeeData.selectedTeam" ng-click = 'showItemList("teamList")'/>
+			<div class="listDropdown" id="teamList">
+				<ul>
+					<li ng-repeat = "teams in data | sortByTeam : employeeData.selectedTeam  track by $index">
+						<div ng-click = "employeeData.selectedTeam = teams.team; employeeData.selectedEmployee =''; showItemList('teamList')">
+							{{teams.team}}
+						</div>
+
+					</li>
+				</ul>
+			</div>
+			<div class="redError" ng-if="teamError">{{teamError}}</div>
+		</div>
+		<div class="team">
+			<div class="teamHead">Select an Employee</div>
+			<input  class="input" type='text' placeholder="Select Employee..." , ng-model = 'employeeData.selectedEmployee' ng-click = 'selectEmployee(); showItemList("employeeList")'/>
+			<div class="listDropdown" id="employeeList">
+				<ul>
+					<li ng-repeat = "employee in listEmployees | sortByEmployees : employeeData.selectedEmployee  track by $index">
+						<div ng-click = "employeeData.selectedEmployee = employee; showItemList('employeeList')">
+							{{employee}}
+						</div>
+
+					</li>
+				</ul>
+			</div>
+			<div class="redError" ng-if="validationError">{{validationError}}</div>
+		</div>
+		<div class="buttons">
+			<button id="cancelButton" class="cancelButton" type="button" ng-click="cancelDialogBox()" ng-mouseover="changeBackgroundColor('cancelButton')" ng-mouseleave="retainBackgroundColor('cancelButton')">Cancel</button>
+			<button id="okButton" class="okButton" type="button" ng-click="validateDialogBox('okButton')"  ng-mouseover="changeBackgroundColor('okButton')" ng-mouseleave="retainBackgroundColor('okButton')">Done</button>
+		</div>
+	</div>
+
 </div>

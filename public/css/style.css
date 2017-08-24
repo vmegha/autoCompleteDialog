@@ -5,58 +5,101 @@ html {
     font-family: "Lucida Sans", sans-serif;
 }
 
-table{
-  border-collapse: collapse; 
+
+.mockUp{
+    margin: auto;
+    width: 35%;
+    margin-top: 160px;
+    background: #fafafa;
 }
-#heading{
-  background: #808080;
+
+.content{
+    overflow: hidden;
+    padding: 25px;
+    font-family: Ariel
 }
-table tr td:first-child
-{
-    background: #80808042;
+
+.head{
+    margin: 10px 0 10px 0;
+    font-size: 24px;
+    color: #00bef2;
+}
+
+input[type="checkbox"]{
+    transform: scale(1.7);
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+input[type="text"]{
+    width: 100%;
+    padding: 7px 15px;
+    font-size: 14px;
     font-weight: 600;
-    text-align: left;
+    font-family: Ariel;
+    background: #9e9e9e61;
+}
+input[type=text]:focus {
+    background-color: white;
+    outline: none !important;
+    border:1px solid #00bef2;
 }
 
-th {
-    height: 50px;
-    color: white;
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #000;
 }
 
-td> span{
-    display: block;
-    font-weight: 100;
-    font-size: 11px;
+::-webkit-input-placeholder:focus { /* WebKit, Blink, Edge */
+    color: red;
+}
+.team{
+    margin-top: 15px;
 }
 
-.search-table-outter { 
-    overflow-x: scroll;
-    clear: both;
+.teamHead{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px 0 10px 0;
 }
-.leftArrow{
-    float: left;
+
+label{
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.85;
+    color: #222;
+    margin: 0 0 0 5px;
+}
+
+.listDropdown {
+    display: none;
+    border: 1px #dadada solid;
     position: relative;
-    left: 9px;
-    top: -6px;
-    font-size: 30px;
+    width: 100%;
+    z-index: 8;
+    border: 1px #dadada solid;
+    background: white;
 }
 
-.rightArrow{
+.redError{
+    color: red;
+    font-family: Ariel;
+}
+
+.buttons{
     float: right;
-    position: relative;
-    right: 173px;
-    font-size: 30px;
-    top: -6px;
+    margin-top: 20px;
 }
-th, td { 
-  min-width: 200px; 
-  text-align: center;
-  border: 2px solid #808080;
-  padding: 20px;
+.cancelButton{
+    width: 80px;
+    margin-right: 15px;
+    height: 35px;
+    background: #9e9e9e61;
 }
 
-tr:hover td {
-  background-color: #2196f340
+.okButton{
+    width: 80px;
+    height: 35px;
+    background: #9e9e9e61;
 }
 
 .multiselect {
@@ -79,64 +122,5 @@ a{
   cursor: pointer;
 }
 
-.overSelect {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
 
-#checkboxes {
-  display: none;
-  border: 1px #dadada solid;
-  position: absolute;
-  width: 200px;
-  z-index: 8;
-  border: 1px #dadada solid;
-  background: white;
-}
 
-#checkboxes label {
-  display: block;
-}
-
-#checkboxes label:hover {
-  background-color: #1e90ff;
-}
-
-.header {
-    background-color: #9933cc;
-    color: #ffffff;
-    padding: 15px;
-    text-align : center;
-    margin-bottom: 10px;
-}
-
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  margin-left: 45%;
-}
-
-.error{
-    font-size: 20px;
-    text-align: center;
-    color : #804646;
-}
-
-.footer{
-    width: 200px;
-    margin: auto;
-    margin-top: 28px;
-    text-align: center;
-    border: 1px solid;
-    padding: 20px;
-    border-radius: 20px;
-    background: gray;
-}
