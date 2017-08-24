@@ -1,20 +1,13 @@
-musicApp.controller('mainCtrl', function($scope, musicFactory, $window){
-    $scope.load = true;
-    $scope.myLimit = 2;
-	/*musicFactory.getMusic().then(function(data){
-	 $scope.companyList = data.companies;
-	 $scope.load = false;
-	 },function(error){
-	 $scope.error =  "Oops Something wrong happend please try again later";
-	 $scope.load = false;
-	 });*/
+autoSuggestApp.controller('mainCtrl', function($scope, $window){
+
+
 	$scope.employeeData = {};
     $scope.data = [
         {team: 'Engineering', employees: ['Lawana Fan', 'Larry Rainer', 'Rahul Malik', 'Leah Shumway']},
         {team: 'Executive', employees: ['Rohan Gupta', 'Ronda Dean', 'Robby Maharaj']},
         {team: 'Finance', employees: ['Caleb Brown', 'Carol Smithson', 'Carl Sorensen']},
         {team: 'Sales', employees: ['Ankit Jain', 'Anjali Maulingkar']}
-    ]
+    ];
 
 
 
@@ -24,13 +17,15 @@ musicApp.controller('mainCtrl', function($scope, musicFactory, $window){
         delete $scope.teamError;
         delete $scope.validationError;
         var checkboxes = document.getElementById(listId);
-        if (!$scope.expanded) {
-            checkboxes.style.display = "block";
-            $scope.expanded = true;
-        } else {
-            checkboxes.style.display = "none";
-            $scope.expanded = false;
-        }
+        if(checkboxes){
+            if (!$scope.expanded) {
+                checkboxes.style.display = "block";
+                $scope.expanded = true;
+            } else {
+                checkboxes.style.display = "none";
+                $scope.expanded = false;
+            }
+		}
     }
 
     $scope.selectEmployee = function() {
@@ -53,8 +48,9 @@ musicApp.controller('mainCtrl', function($scope, musicFactory, $window){
     	var matchedName = false;
         if($scope.listEmployees && $scope.listEmployees.length){
             for(var nameKey=0; nameKey< $scope.listEmployees.length; nameKey++){
-                if($scope.listEmployees[nameKey].toLowerCase() === $scope.employeeData.selectedEmployee){
+                if($scope.listEmployees[nameKey].toLowerCase() === $scope.employeeData.selectedEmployee.toLowerCase()){
                     var matchedName = true;
+                    $scope.successfulSubmission = true;
                     break;
                 }
             }
@@ -73,93 +69,47 @@ musicApp.controller('mainCtrl', function($scope, musicFactory, $window){
     $scope.retainBackgroundColor = function(objId){
         var element = document.getElementById(objId)
         element.style.backgroundColor="#9e9e9e61";
-    }
-    //$scope.selectedTeam = $scope.searchTeam
-	/*$scope.showCheckboxes = function(event){
-	 event.stopImmediatePropagation()
-	 var checkboxes = document.getElementById("checkboxes");
-	 if (!$scope.expanded) {
-	 checkboxes.style.display = "block";
-	 $scope.expanded = true;
-	 } else {
-	 checkboxes.style.display = "none";
-	 $scope.expanded = false;
-	 }
-	 }
-	 $scope.addOrRemoveCol = function( col){
-	 if(col.check){
-	 var columns = document.getElementById("heading");
-	 var th = document.createElement("th");
-	 th.innerHTML = col.name
-	 columns.append(th);
-	 //document.getElementsByClassName("example");
-	 var rows = document.getElementById("tableBody");
-	 angular.forEach(rows.children, function(rowValue, key){
-	 var tdElem = document.createElement("td");
-	 tdElem.innerHTML = "test data";
-	 rowValue.append(tdElem);
-	 })
-
-	 }
-	 }
-
-	 $scope.onclick = function(){
-	 $scope.expanded = false;
-	 checkboxes.style.display = "none";
-	 }*/
-
-
-});
-
-musicApp.directive('onOuterClick', function ($document) {
-    return {
-        restrict: 'EA',
-
-        link: function (scope, elem, attr) {
-            elem.bind('click', function (e) {
-                e.stopPropagation();
-            });
-            $document.bind('click', function () {
-                //scope.$applyAsync(attr.onOuterClick);
-                scope.$apply(attr.onclick)
-            });
-
-
-        }
-    };
-});
-
-musicApp.factory('musicFactory', function($q, $http){
-    return{
-        getMusic : function(){
-            var productionUrl = "https://vmegha.github.io/companyInfo/";
-            var deferred = $q.defer();
-            $http.get(productionUrl + 'companies.json', {
-                cache: true
-            })
-                .success(function(data){
-                    deferred.resolve(data);
-                }).error(function(error){
-                deferred.reject(error);
-            })
-            return deferred.promise;
-        }
+        element.style.color= "black";
     }
 
+    $scope.cancelDialogBox = function(){
+    	if($scope.employeeData.selectedTeam || $scope.employeeData.selectedEmployee){
+    		$scope.openConfirmationBox = true;
+    		$scope.confirmationMsg = "All the edits will be removed. Do you want to continue?"
+		}
+		else{
+    		$scope.successfulSubmission = true;
+		}
+	}
+
+	$scope.cancelConfirmBox = function(){
+    	delete $scope.openConfirmationBox;
+        delete $scope.confirmationMsg;
+	}
+
+	$scope.doneConfirmBox = function(){
+         delete $scope.employeeData.selectedTeam;
+         delete $scope.employeeData.selectedEmployee;
+		 delete $scope.openConfirmationBox;
+		 delete $scope.confirmationMsg;
+	}
+
+
 });
 
-musicApp.filter("sortByTeam", function(){
+
+autoSuggestApp.filter("sortByTeam", function(){
     return function(list, searchText ) {
         if (!searchText) {
             return list;
         }
         var result = [];
+        var searchItems1 = [];
+        var searchItems2 = [];
+        var searchItems3 = [];
         angular.forEach(list, function (item, key) {
             const regex = new RegExp(searchText, 'i');
             var finalItem = item.team;
-            var searchItems1 = [];
-            var searchItems2 = [];
-            var searchItems3 = [];
             if (regex.test(finalItem.substring(0, searchText.length))) {
                 searchItems1.push(item);
             } else if (regex.test(finalItem.substring(searchText.length))) {
@@ -167,24 +117,22 @@ musicApp.filter("sortByTeam", function(){
             } else if (finalItem.indexOf(searchText) > -1) {
                 searchItems3.push(item);
             }
-			if(searchItems1.length){
-                result = result.concat(searchItems1)
-			}
-            if(searchItems2.length){
-				result = result.concat(searchItems2);
-			}
-            if(searchItems3.length) {
-                result = result.concat(searchItems2);
-            }
         });
-        console.log(result);
-
+        if(searchItems1.length){
+            result = result.concat(searchItems1)
+        }
+        if(searchItems2.length){
+            result = result.concat(searchItems2);
+        }
+        if(searchItems3.length) {
+            result = result.concat(searchItems2);
+        }
         return result;
 
     }
 });
 
-musicApp.filter("sortByEmployees", function(){
+autoSuggestApp.filter("sortByEmployees", function(){
     return function(list, searchText ) {
         if (!searchText) {
             return list;
@@ -214,8 +162,6 @@ musicApp.filter("sortByEmployees", function(){
         if(searchItems3.length) {
             result = result.concat(searchItems2);
         }
-        console.log(result);
-
         return result;
 
     }

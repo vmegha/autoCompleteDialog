@@ -1,8 +1,8 @@
 /*intializing the app rooot */
 
-var musicApp = angular.module('musicApp', ['ui.router']);
+var autoSuggestApp = angular.module('autoSuggestApp', ['ui.router']);
 
-musicApp.config(function($stateProvider, $urlRouterProvider) {
+autoSuggestApp.config(function($stateProvider, $urlRouterProvider) {
 
 $urlRouterProvider.otherwise('/');
 

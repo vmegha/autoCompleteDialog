@@ -1,114 +1,64 @@
-<!--
-<div class="header">
-  <h1>Companies Info</h1>
-</div>
-<div class="loader" ng-show="load"></div>
-<div on-outer-click ng-click="onclick()">
-	<form>
-	  <div class="multiselect">
-	    <div class="selectBox" ng-click="showCheckboxes($event)">
-	      <select>
-	        <option>Customize Columns</option>
-	      </select>
-	      <div class="overSelect"></div>
-	    </div>
-	    <div id="checkboxes">
-	    	<label for = "{{$index}}" ng-repeat="col in columnNames track by $index">
-	    		<input type="checkbox" id="{{$index}}" ng-model="col.check" ng-change="addOrRemoveCol(col)" />{{col.name}}</label>
-	    </div>
-	  </div>
-	</form>
-	<div>
-		<div class="leftArrow" ng-click="scrollLeft($event)"><i class="fa fa-arrow-circle-left custom" ></i></div>
-		<div class="rightArrow" ng-click="scrollRight($event)"><i class="fa fa-arrow-circle-right custom" ></i></div>
-	</div>
-    <div class= "search-table-outter" id="searchTable">
-	    <table id = "mainTable">
-		    	<thead>
-		    	<tr id="heading">
-		    		<th>Company</th>
-		    		<th> Location</th>
-		    		<th> Market</th>
-		    		<th> Website</th>
-		    		<th> Employees</th>
-		    		<th> Stage</th>
-		    	</tr>
-		    	</thead>
-		    <tbody id="tableBody">
-		    	<tr ng-repeat="list in companyList track by $index" ng-if="$index < myLimit">
-		    		<td>
-		    			{{list.name}}
-		    			<span>
-		    				{{list.description}}
-		    			</span>
-		    		</td>
-		    		<td>
-		    			{{list.location}}
-		    		</td>
-		    		<td>
-		    			{{list.market.join(',')}}
-		    		</td>
-		    		<td>
-		    			<a>{{list.website}}</a>
-		    		</td>
-		    		<td>
-		    			{{list.employees}}
-		    		</td>
-		    		<td>
-		    			{{list.stage}}
-		    		</td>
-		    	</tr>
-		    	</tbody>
-		    	&lt;!&ndash; <tr>{{list.location}}</tr> &ndash;&gt;
-
-	    </table>
-	</div>
-</div>
-<div class = "error">{{error}}</div>
-<div class="footer" ng-if="!load && (myLimit <  companyList.length)" ng-click="loadMore()">
-	 Load More
-</div>-->
-<div class="mockUp">
-	<div class = "content">
-		<div class="head">Select an Employee</div>
-		<div>
-			<input type="checkbox" name= "email" id="emailEmp">
-			<label>Send welcome email to employee</label>
-		</div>
-		<div class="team">
-			<div class="teamHead">Select a team in the organisation</div>
-			<input  class="input" type='text' placeholder="Select Team..."  ng-model = "employeeData.selectedTeam" ng-click = 'showItemList("teamList")'/>
-			<div class="listDropdown" id="teamList">
-				<ul>
-					<li ng-repeat = "teams in data | sortByTeam : employeeData.selectedTeam  track by $index">
-						<div ng-click = "employeeData.selectedTeam = teams.team; employeeData.selectedEmployee =''; showItemList('teamList')">
-							{{teams.team}}
-						</div>
-
-					</li>
-				</ul>
+<div>
+	<div class="backPopUp" ng-if = "openConfirmationBox"></div>
+	<div class="successfulSubmission" ng-if="successfulSubmission">Work Done Successfully</div>
+	<div class="mockUp" ng-if="!successfulSubmission">
+		<div class="crossIconDialog" ng-click="cancelDialogBox()" >X</div>
+		<div class = "content">
+			<div class="head">Select an Employee</div>
+			<div>
+				<input type="checkbox" name= "email" id="emailEmp" ng-checked = "true">
+				<label>Send welcome email to employee</label>
 			</div>
-			<div class="redError" ng-if="teamError">{{teamError}}</div>
-		</div>
-		<div class="team">
-			<div class="teamHead">Select an Employee</div>
-			<input  class="input" type='text' placeholder="Select Employee..." , ng-model = 'employeeData.selectedEmployee' ng-click = 'selectEmployee(); showItemList("employeeList")'/>
-			<div class="listDropdown" id="employeeList">
-				<ul>
-					<li ng-repeat = "employee in listEmployees | sortByEmployees : employeeData.selectedEmployee  track by $index">
-						<div ng-click = "employeeData.selectedEmployee = employee; showItemList('employeeList')">
-							{{employee}}
-						</div>
+			<div class="team">
+				<div class="teamHead">Select a team in the organisation</div>
+				<input  class="input" type='text' placeholder="Select Team..."  ng-model = "employeeData.selectedTeam"  ng-click='showItemList("teamList")'/>
+				<div class="dropDownArrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+				<div class="listDropdown" id="teamList">
+					<ul>
+						<li ng-repeat = "teams in data | sortByTeam : employeeData.selectedTeam  track by $index">
+							<div class="items" ng-click = "employeeData.selectedTeam = teams.team; employeeData.selectedEmployee =''; showItemList('teamList')">
+								{{teams.team}}
+							</div>
 
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="redError" ng-if="teamError">{{teamError}}</div>
 			</div>
-			<div class="redError" ng-if="validationError">{{validationError}}</div>
+			<div class="team">
+				<div class="teamHead">Select an Employee</div>
+				<input  class="input" type='text' placeholder="Select Employee..." , ng-model = 'employeeData.selectedEmployee' ng-click = 'selectEmployee(); showItemList("employeeList")'/>
+				<div class="dropDownArrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+				<div ng-if="listEmployees.length" class="listDropdown" id="employeeList">
+					<ul>
+						<li ng-repeat = "employee in listEmployees | sortByEmployees : employeeData.selectedEmployee  track by $index">
+							<div class="items" ng-click = "employeeData.selectedEmployee = employee; showItemList('employeeList')">
+								{{employee}}
+							</div>
+
+						</li>
+					</ul>
+				</div>
+				<div class="redError" ng-if="validationError">{{validationError}}</div>
+			</div>
+			<div class="buttons">
+				<button id="cancelButton" class="cancelButton" type="button" ng-click="cancelDialogBox()" ng-mouseover="changeBackgroundColor('cancelButton')" ng-mouseleave="retainBackgroundColor('cancelButton')">Cancel</button>
+				<button id="okButton" class="okButton" type="button" ng-click="validateDialogBox('okButton')"  ng-mouseover="changeBackgroundColor('okButton')" ng-mouseleave="retainBackgroundColor('okButton')">Done</button>
+			</div>
 		</div>
-		<div class="buttons">
-			<button id="cancelButton" class="cancelButton" type="button" ng-click="cancelDialogBox()" ng-mouseover="changeBackgroundColor('cancelButton')" ng-mouseleave="retainBackgroundColor('cancelButton')">Cancel</button>
-			<button id="okButton" class="okButton" type="button" ng-click="validateDialogBox('okButton')"  ng-mouseover="changeBackgroundColor('okButton')" ng-mouseleave="retainBackgroundColor('okButton')">Done</button>
-		</div>
+
 	</div>
 
+	<div class= "confirmationBox" ng-if="openConfirmationBox">
+		<div class="crossIcon" ng-click="cancelConfirmBox()">X</div>
+		<div class = "contentConfirmBox">
+			<div class="msg">
+				{{confirmationMsg}}
+			</div>
+			<div class="buttons">
+				<button  id="cancelButtonConfirm" class="cancelButton" type="button" ng-click="cancelConfirmBox()" ng-mouseover="changeBackgroundColor('cancelButtonConfirm')" ng-mouseleave="retainBackgroundColor('cancelButtonConfirm')">Cancel</button>
+				<button  id="okButtonConfirm" class="okButton" type="button" ng-click="doneConfirmBox()"  ng-mouseover="changeBackgroundColor('okButtonConfirm')" ng-mouseleave="retainBackgroundColor('okButtonConfirm')">Done</button>
+			</div>
+		</div>
+	</div>
 </div>
